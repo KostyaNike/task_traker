@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <form method="get">
+        {{ form.status.label_tag }}
+        {{ form.status }}
+        <button type="submit">CLICK</button>
+    </form>
     <ul>
         {% for task in tasks %}
             <li><a href="{% url 'task-detail' task.pk %}">{{task.title}}</a>
