@@ -3,4 +3,22 @@
 {% block content %}
     <p> {{task.title}} </p> 
     <p> {{task.discription}} </p>
+    <div>
+        <h3>Comments</h3>
+        {% for comment in task.comments.all %}
+        <p>Author: {{ comment.author.username }}</p>
+        <p>{{ comment.content }}</p>
+        <p>{{ comment.created_at }}</p>
+        {% empty %}
+        <p>Empty</p>
+        {% endfor %}
+    </div>
+    <div>
+        <h5>Add comment</h5>
+        <form method="post" action="{% url 'task-detail' task.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit">Send</button>
+        </form>
+    </div>
 {% endblock %}
