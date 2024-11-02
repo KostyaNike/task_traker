@@ -1,11 +1,67 @@
 {% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
 
 {% block content %}
-    <form method="get">
+    <form method="get" class="container">
         {{ form.status.label_tag }}
-        {{ form.status }}
-        <button type="submit">CLICK</button>
+        <button type="submit">Search</button>
+        {{ form.status }} <!-- Это будет стандартный select, скрытый через CSS -->
+    
+        <div class="custom-select-container"></div>
     </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(function() {
+        $('.choose').each(function() {
+            var $select = $(this);
+            var firstOptionText = $select.children('option:first-child').text();
+            var $customSelect = $('<div class="custom-select"></div>');
+            
+            // Создаем элемент span для отображения выбранного значения
+            $customSelect.append('<span class="spanVal">' + firstOptionText + '</span>');
+            $customSelect.append('<ul></ul>');
+            
+            // Добавляем все опции в кастомный список
+            $select.children('option').each(function() {
+                var optionValue = $(this).val();
+                var optionText = $(this).text();
+                $('<li data-value="' + optionValue + '">' + optionText + '</li>').appendTo($customSelect.find('ul'));
+            });
+            
+            // Помещаем кастомный select после стандартного select
+            $select.after($customSelect);
+        });
+
+        // Обработчик клика для spanVal
+        $('.spanVal').on('click', function() {
+            $(this).siblings('ul').slideToggle('fast'); // Показываем/скрываем список
+        });
+
+        // Обработчик клика для пунктов списка
+        $('.custom-select').on('click', 'li', function() {
+            var selectedText = $(this).text();
+            var selectedValue = $(this).data('value');
+            $(this).closest('.custom-select').find('.spanVal').html(selectedText);
+            $(this).closest('.custom-select').prev('select').val(selectedValue); // Устанавливаем значение в скрытый select
+            $(this).parent().hide(); // Скрываем список
+        });
+
+        // Закрытие списка при клике вне его
+        $(document).click(function(e) {
+            if (!$(e.target).closest('.custom-select').length) {
+                $(".custom-select ul").hide(); // Скрываем список, если кликнули вне него
+            }
+        });
+    });
+    </script>
+
     <ul>
         {% for task in tasks %}
             <li><a href="{% url 'task-detail' task.pk %}">{{task.title}}</a>

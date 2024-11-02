@@ -17,4 +17,13 @@ class TaskFilterForm(forms.Form):
         ('in_progress', 'In progress'),
         ('done', 'Done'),
     ]
-    status = forms.ChoiceField(choices=STATUS_CHOICES, required=False, label='status')
+
+    status = forms.ChoiceField(
+        choices=STATUS_CHOICES,
+        required=False,
+        label='Select status:',
+        widget=forms.Select(attrs={
+            'class': 'choose',
+            'style': 'visibility:hidden;'
+        })
+    )
