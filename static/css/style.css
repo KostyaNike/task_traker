@@ -1,76 +1,128 @@
-body{
-    background-color: rgb(123, 230, 235);
+.p-container {
+    display: flex;
+    flex-direction: column;   /* Ставит <p> элементы друг под другом */
+    align-items: center;      /* Центрирует <p> элементы по горизонтали */
 }
 
-.container {
-    width: 500px;
-    margin: 20px auto;
-    position: relative;
-}
-
-select {
-    float: left;
-    width: 100%;
-    height: 30px;
-    visibility: hidden;
-}
-
-.custom-select {
-    float: left;
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.spanVal {
+p {
     font-size: 16px;
-    font-family: arial;
+    font-family: Arial, sans-serif;
     color: #333;
+    padding: 9px;
     border: 1px solid #ccc;
-    padding: 8px;
-    width: 97%;
-    float: left;
-    position: relative;
-    cursor: pointer;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;        /* Центрирует текст внутри <p> */
+    margin-top: 10px;          /* Отступ между параграфами */
 }
 
-.spanVal:after {
-    content: '';
-    position: absolute;
-    right: 10px;
-    top: 13px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 8px solid #999;
+h2 {
+    background-color: #7e7b73; /* Цвет фона (можно изменить на любой другой) */
+    color: #333;               /* Цвет текста */
+    padding: 5px 15px;       /* Отступы внутри заголовка */
+    border-radius: 5px;       /* Скругление углов */
+    text-align: center;        /* Центрирование текста */
+    font-size: 24px;          /* Размер шрифта */
+    margin: 20px 65px;
+    margin-top: 10px;           /* Отступы сверху и снизу от заголовка */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+    padding: 10px 10px;
+    margin: 0px 0 0 0px; /* Тень для добавления глубины */
 }
 
-.custom-select ul {
-    float: left;
-    width: 100%;
-    margin: -1px 0 0;
+h3 {
+    text-align: center; /* Центрируем текст */
+    font-size: 2.5em; /* Размер шрифта */
+    color: #333; /* Цвет текста */
+    margin: 20px 0; /* Отступы сверху и снизу */
+    padding: 10px; /* Отступы внутри элемента */
+    font-family: 'Roboto', sans-serif; /* Шрифт */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Легкая тень для текста */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #474a4a;
+}
+
+.task-list {
+    list-style-type: none;
     padding: 0;
-    border: 1px solid #ccc;
-    box-shadow: 1px 2px 2px 0px #ccc;
-    display: none;
+    margin: 0;
+    max-width: 400px; /* Ограничивает ширину списка */
+    margin-left: auto;
+    margin-right: 600px;
+    margin-top: 100px; /* Сдвигает список немного вправо */
+    position: relative;
 }
 
-.custom-select li {
-    float: left;
-    width: 96%;
-    font-size: 14px;
-    color: #333;
-    font-family: arial;
-    list-style: none;
+.task-item {
+    position: relative; /* Для позиционирования выпирающего блока */
+    padding: 50px 0; /* Отступы снизу, чтобы не перекрывать содержимое */
+}
+
+.task-title {
+    text-align: center; /* Центрирует заголовок */
+    margin-bottom: 10px; /* Отступ снизу от заголовка */
+    font-size: 24px; /* Размер шрифта заголовка */
+    color: #333; /* Цвет текста заголовка */
+}
+
+.header-icon {
+    position: absolute;
+    top: -20px; /* Сдвинуть вверх */
+    left: -20px; /* Сдвинуть влево */
+    width: 60px; /* Ширина иконки */
+    height: 60px; /* Высота иконки */
+    background-color: #0078d4; /* Цвет фона иконки */
+    border-radius: 5px; /* Закругленные углы */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Тень */
+}
+
+.task-content {
     padding: 10px;
-    cursor: pointer;
+    background-color: #e0e0e0; /* Цвет фона */
+    border-radius: 4px; /* Закругленные углы */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень */
+    border: 1px solid #bbb; /* Тонкая рамка */
+    width: 90%; /* Ограничивает ширину блока */
+    margin: 0 auto; /* Центрирует блок внутри элемента списка */
 }
 
-.custom-select li:hover,
-.custom-select li.active {
-    background-color: #6184c4;
+.task-content p {
+    font-size: 14px; /* Уменьшает размер текста */
+    margin: 5px 0; /* Уменьшает отступы между <p> */
+}
+
+/* Полосы по бокам */
+.vertical-line-left,
+.vertical-line-right {
+    position: fixed;
+    top: 0;
+    width: 5px; /* Ширина полосы */
+    height: 100vh; /* Высота на весь экран */
+    background-color: #bbb; /* Цвет полосы */
+    z-index: -1; /* Размещает полосы за контентом */
+}
+
+/* Полосы по бокам */
+.vertical-line-left,
+.vertical-line-right {
+    position: fixed;
+    top: 0;
+    width: 5px; /* Ширина полосы */
+    height: 100vh; /* Высота на весь экран */
+    background-color: #8e8a8a; /* Цвет полосы */
+    z-index: -1; /* Размещает полосы за контентом */
+}
+
+.vertical-line-left {
+    left: calc(50% - 300px); /* Позиция от левого края для левой полосы, сдвинут влево */
+}
+
+.vertical-line-right {
+    right: calc(50% - 230px); /* Позиция от правого края для правой полосы, сдвинут влево */
 }
 
 .ripple {
@@ -81,7 +133,7 @@ select {
   background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;
 }
 .ripple:active {
-  background-color: #6eb9f7;
+  background-color: #9eb0be;
   background-size: 100%;
   transition: background 0s;
 }
@@ -95,7 +147,119 @@ button {
   text-transform: uppercase;
   cursor: pointer;
   color: white;
-  background-color: #2196f3;
+  background-color: #4682b4;
   box-shadow: 0 0 4px #999;
   outline: none;
+}
+
+
+
+
+
+.container {
+    display: flex;
+    flex-direction: column;  /* Вертикальное выравнивание */
+    align-items: center;      /* Центрирование по горизонтали */
+    margin-top: 50px;        /* Отступ сверху для визуального разделения */
+}
+
+.select-container {
+    position: relative;       /* Позиционирование для контейнера select */
+    margin: -10px 0 0 -50px;      /* Отступы: сверху 30px, снизу 30px */
+}
+
+.bootstrap-select {
+    position: absolute;       /* Позволяет размещать select отдельно */
+    left: 0;                  /* Привязка к левому краю контейнера */
+    right: 0;                 /* Привязка к правому краю контейнера */
+    transform: translateX(-30px); /* Сдвиг влево */
+}
+
+.bootstrap-select > .dropdown-toggle {
+    background: #EDF2F5;
+    border: 0;
+    width: 100%;
+    padding: 16px 15px;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.030em;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+}
+
+.dropdown-menu {
+    box-shadow: 0px 0px 15px rgba(60, 76, 150, 0.1);
+    position: absolute;
+    left: 0;
+    background: #fff;
+    min-width: 100% !important;
+    width: 100% !important;
+}
+
+
+.blue-button {
+    display: inline-block; /* Для обеспечения правильной работы отступов и размеров */
+    padding: 10px 20px; /* Внутренние отступы */
+    font-size: 14px; /* Размер шрифта */
+    font-weight: bold; /* Жирный шрифт */
+    color: #ffffff; /* Цвет текста */
+    background-color: #007bff; /* Синий фон */
+    border: none; /* Убрать границу */
+    border-radius: 5px; /* Скругление углов */
+    text-decoration: none; /* Убрать подчеркивание ссылки */
+    text-align: center; /* Выравнивание текста по центру */
+    position: relative; /* Для анимации псевдоэлементов */
+    overflow: hidden; /* Скрыть переполнение */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Плавные переходы */
+}
+
+/* Эффекты при наведении */
+.blue-button:hover {
+    background-color: #0056b3; /* Темнее при наведении */
+    transform: translateY(-2px); /* Подъем кнопки */
+}
+
+/* Эффекты при нажатии */
+.blue-button:active {
+    transform: translateY(2px); /* Опускание кнопки */
+}
+
+/* Псевдоэлемент для эффекта волны */
+.blue-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.6s, opacity 0.6s; /* Плавные переходы */
+}
+
+/* Эффект волны при нажатии */
+.blue-button:active::after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1; /* Показать эффект */
+}
+
+/* Эффект появления текста */
+.blue-button:hover {
+    animation: textEffect 0.3s ease; /* Анимация текста */
+}
+
+@keyframes textEffect {
+    0% {
+        color: #ffffff; /* Исходный цвет текста */
+    }
+    50% {
+        color: #ffcc00; /* Цвет текста во время эффекта */
+    }
+    100% {
+        color: #ffffff; /* Возврат к исходному цвету */
+    }
 }

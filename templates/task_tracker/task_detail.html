@@ -1,24 +1,139 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Application</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+</head>
 
 {% block content %}
-    <p> {{task.title}} </p> 
-    <p> {{task.discription}} </p>
-    <div>
-        <h3>Comments</h3>
-        {% for comment in task.comments.all %}
-        <p>Author: {{ comment.author.username }}</p>
-        <p>{{ comment.content }}</p>
-        <p>{{ comment.created_at }}</p>
-        {% empty %}
-        <p>Empty</p>
-        {% endfor %}
-    </div>
-    <div>
-        <h5>Add comment</h5>
-        <form method="post" action="{% url 'task-detail' task.id %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ comment_form.as_p }}
-            <button type="submit">Send</button>
-        </form>
-    </div>
+    <<div class="container">
+        <div class="header">
+          <input type="radio" name="tab" id="tab1" value="tab1">
+          <input type="radio" name="tab" id="tab2" value="tab2">
+          <input type="radio" name="tab" id="tab3" value="tab3">
+          <div class="tabs">
+            <label for="tab1">
+            <div class="tab active">
+              <p>Task Info</p>
+            </div>
+          </label>
+          <label for="tab2">
+            <div class="tab">
+              <p>Comments</p>
+            </div>
+          </label>
+          <label for="tab3">
+            <div class="tab">
+              <p>Add Comment</p>
+            </div>
+          </label>
+          </div>
+        </div>
+        <div class="tab-container">
+          <div class="content">
+            <p><b>Name: {{task.title}}</b></p> 
+            <p>Discription: {{task.discription}}</p>
+          </div>
+          <div class="content">
+            <div>
+                <h3>Comments</h3>
+                {% for comment in task.comments.all %}
+                <p>Author: {{ comment.author.username }}</p>
+                <p>{{ comment.content }}</p>
+                <p>{{ comment.created_at }}</p>
+                {% empty %}
+                <h2>Empty</h2>
+                {% endfor %}
+            </div>
+          </div>
+          <div class="content">
+            <div>
+                <h2>Add comment</h2>
+                <form method="post" action="{% url 'task-detail' task.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit" class="button">Save</button>
+                </form>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="button ripple" id="magicButton"><span>Back</span></button>
+      </div>
+
+    <script>
+        document.getElementById('magicButton').addEventListener('click', function () {
+            history.back(); // Возвращает на предыдущую страницу
+        });
+        document.getElementById('magicButton').addEventListener('click', function (e) {
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+
+        ripple.style.width = ripple.style.height = `${size}px`;
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+        ripple.classList.add('ripple');
+
+        this.appendChild(ripple);
+
+        // Remove the ripple effect after animation completes
+        ripple.addEventListener('animationend', () => {
+            ripple.remove();
+        });
+    });
+
+    // Add hover effects
+    document.querySelector('.button').addEventListener('mouseover', function () {
+        this.style.transform = 'scale(1.05)';
+        this.style.transition = 'transform 0.2s';
+    });
+
+    document.querySelector('.button').addEventListener('mouseout', function () {
+        this.style.transform = 'scale(1)';
+    });
+        
+        let tab1 = document.querySelector("#tab1");
+        let tab2 = document.querySelector("#tab2");
+        let tab3 = document.querySelector("#tab3");
+        let tabs = document.querySelectorAll(".tab");
+        let content = document.querySelectorAll(".content");
+
+        tab1.onclick = () => {
+        if (tab1.checked) {
+            content[0].style.display = "block";
+            content[1].style.display = "none";
+            content[2].style.display = "none";
+            tabs[0].classList.add("active");
+            tabs[1].classList.remove("active");
+            tabs[2].classList.remove("active");
+        }
+        };
+
+        tab2.onclick = () => {
+        if (tab2.checked) {
+            content[0].style.display = "none";
+            content[1].style.display = "block";
+            content[2].style.display = "none";
+            tabs[1].classList.add("active");
+            tabs[0].classList.remove("active");
+            tabs[2].classList.remove("active");
+        }
+        };
+
+        tab3.onclick = () => {
+        if (tab3.checked) {
+            content[0].style.display = "none";
+            content[1].style.display = "none";
+            content[2].style.display = "block";
+            tabs[2].classList.add("active");
+            tabs[0].classList.remove("active");
+            tabs[1].classList.remove("active");
+        }
+        };
+    </script>
+
 {% endblock %}

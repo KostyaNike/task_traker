@@ -21,11 +21,18 @@ class TaskFilterForm(forms.Form):
     status = forms.ChoiceField(
         choices=STATUS_CHOICES,
         required=False,
-        label='Select status:',
+        label='',
         widget=forms.Select(attrs={
-            'class': 'choose',
-            'style': 'visibility:hidden;'
+            'class': 'selectpicker',  # Устанавливаем класс для Bootstrap Select
+            'style': 'display:none;'  # Скрываем оригинальный элемент select
         })
+    )
+
+    name = forms.CharField(
+        max_length=100,
+        required=True,
+        label='Name',
+        error_messages={'required': 'Заполните это поле.'}  # Кастомное сообщение об ошибке
     )
 
 class CommentForm(forms.ModelForm):

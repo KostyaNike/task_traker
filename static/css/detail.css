@@ -1,0 +1,356 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+@import "bourbon";
+
+
+body {
+  background: #2C3E50;
+}
+
+.container {
+  display: block;
+  margin: auto;
+  height: auto;
+  max-width: 500px;
+}
+
+#tab1, #tab2, #tab3 {
+  display: none;
+}
+
+.tabs {
+  display: flex;
+  align-items: flex-end;
+  margin: auto;
+  text-align: center;
+}
+
+.tab {
+  display: flex;
+  width: 100%;
+  margin: 0px 0px -16px 0px;
+}
+
+.tab p {
+  width: 8em;
+  font-family: 'Inter', sans-serif;
+  color: white;
+  padding: 12px 19px;
+  background: gray;
+  border-radius: 10px;
+  
+  position: relative; /* Позволяет позиционировать псевдоэлементы */
+  background: linear-gradient(135deg, #6a74e2, #4a5ed7); /* Градиентный фон */
+  color: #ffffff; /* Цвет текста */
+  font-size: 0.9em; /* Уменьшенный размер шрифта */
+  font-weight: 700; /* Жирный шрифт */
+  padding: 10px 20px; /* Уменьшенные внутренние отступы */
+  border: none; /* Убрать стандартные границы */
+  border-radius: 12px; /* Скругление углов */
+  cursor: pointer; /* Указатель мыши при наведении */
+  transition: all 0.4s ease; /* Плавные переходы для всех свойств */
+  text-align: center; /* Выравнивание текста по центру */
+  display: inline-block; /* Позволяет задать ширину */
+  overflow: hidden; /* Скрыть лишнее */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень кнопки */
+  font-family: 'Roboto', sans-serif; /* Шрифт */
+
+  
+}
+
+.active p {
+  padding: 15px 20px;
+  background: #fff;
+  color: #2C3E50;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-radius: 5px;
+}
+
+.content {
+  width: 420px;
+  display: none;
+  padding: 5px 20px;
+  background: #fff;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.content:nth-child(1) {
+  display: block;
+}
+
+.content h1 {
+  font-family: 'Inter', sans-serif;
+  color: #2C3E50;
+}
+
+.content p {
+  font-family: 'Ubuntu', sans-serif;
+  color: #2C3E50;
+}
+
+
+
+
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+textarea {
+    width: 80%; /* Занять 80% ширины родительского элемента */
+    padding: 15px; /* Увеличенные внутренние отступы */
+    border: 2px solid #ccc; /* Цвет границы */
+    border-radius: 5px; /* Скругление углов */
+    font-size: 1em; /* Размер шрифта */
+    font-family: 'Roboto', sans-serif; /* Шрифт */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s; /* Плавные переходы */
+    position: relative; /* Для позиционирования псевдоэлементов */
+    color: #333; /* Цвет текста */
+    background: #f9f9f9; /* Цвет фона */
+    resize: none; /* Запретить изменение размера поля */
+}
+
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus, 
+textarea:focus {
+    border-color: #6a74e2; /* Цвет границы при фокусе */
+    box-shadow: 0 0 5px rgba(106, 116, 226, 0.5); /* Тень вокруг поля */
+    outline: none; /* Убрать стандартное выделение */
+    transform: scale(1.02); /* Увеличение при фокусе */
+}
+
+input::placeholder, 
+textarea::placeholder {
+    color: #aaa; /* Цвет текста плейсхолдера */
+    opacity: 0.7; /* Прозрачность текста плейсхолдера */
+    transition: opacity 0.3s ease; /* Плавный переход для плейсхолдера */
+}
+
+input[type="text"]:hover, 
+input[type="email"]:hover, 
+input[type="password"]:hover, 
+textarea:hover {
+    border-color: #6a74e2; /* Цвет границы при наведении */
+    box-shadow: 0 0 5px rgba(106, 116, 226, 0.2); /* Легкая тень при наведении */
+}
+
+input[type="text"]:not(:placeholder-shown), 
+input[type="email"]:not(:placeholder-shown), 
+input[type="password"]:not(:placeholder-shown), 
+textarea:not(:placeholder-shown) {
+    border-color: #6a74e2; /* Цвет границы при заполнении */
+    box-shadow: 0 0 5px rgba(106, 116, 226, 0.5); /* Тень при заполнении */
+}
+
+/* Эффект волны для активного поля */
+input[type="text"]:active::after, 
+input[type="email"]:active::after, 
+input[type="password"]:active::after, 
+textarea:active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 5px;
+    background: rgba(106, 116, 226, 0.1);
+    transform: scale(1);
+    animation: ripple 0.6s ease-out;
+    pointer-events: none; /* Отключить события мыши для псевдоэлемента */
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* Эффекты при вводе текста */
+input[type="text"]:focus::placeholder,
+input[type="email"]:focus::placeholder,
+input[type="password"]:focus::placeholder {
+    color: transparent; /* Скрыть плейсхолдер при вводе текста */
+}
+
+input[type="text"]:focus {
+    animation: typing 0.5s ease forwards; /* Анимация при вводе текста */
+}
+
+@keyframes typing {
+    from {
+        background: rgba(106, 116, 226, 0.2); /* Фон при вводе */
+    }
+    to {
+        background: #f9f9f9; /* Исходный цвет фона */
+    }
+}
+
+/* Перемещение текста при фокусе */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    padding-left: 20px; /* Сдвинуть текст влево */
+}
+
+/* Эффект при заполнении */
+input[type="text"]:valid, 
+input[type="email"]:valid, 
+input[type="password"]:valid, 
+textarea:valid {
+    animation: glow 0.5s ease forwards; /* Эффект свечения при корректном вводе */
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px rgba(106, 116, 226, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 10px rgba(106, 116, 226, 1);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(106, 116, 226, 0.5);
+    }
+}
+
+/* Анимации текста при вводе */
+@keyframes textEffect {
+    0% {
+        transform: scale(1);
+        color: #333;
+    }
+    50% {
+        transform: scale(1.1);
+        color: #6a74e2;
+    }
+    100% {
+        transform: scale(1);
+        color: #333;
+    }
+}
+
+/* Применение анимации к тексту при вводе */
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus {
+    animation: textEffect 0.4s ease forwards; /* Анимация текста при фокусе */
+}
+
+
+
+
+.button {
+  position: relative; /* Позволяет позиционировать псевдоэлементы */
+  background: linear-gradient(135deg, #6a74e2, #4a5ed7); /* Градиентный фон */
+  color: #ffffff; /* Цвет текста */
+  font-size: 0.9em; /* Уменьшенный размер шрифта */
+  font-weight: 700; /* Жирный шрифт */
+  padding: 10px 20px; /* Уменьшенные внутренние отступы */
+  border: none; /* Убрать стандартные границы */
+  border-radius: 12px; /* Скругление углов */
+  cursor: pointer; /* Указатель мыши при наведении */
+  transition: all 0.4s ease; /* Плавные переходы для всех свойств */
+  text-align: center; /* Выравнивание текста по центру */
+  display: inline-block; /* Позволяет задать ширину */
+  overflow: hidden; /* Скрыть лишнее */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень кнопки */
+  font-family: 'Roboto', sans-serif; /* Шрифт */
+}
+
+.button::before, .button::after {
+  content: ''; /* Псевдоэлементы для эффектов */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%; /* Размер для анимации */
+  height: 300%; /* Размер для анимации */
+  border-radius: 50%; /* Круглая форма */
+  background: rgba(255, 255, 255, 0.2); /* Светлый фон */
+  transition: transform 0.5s ease, opacity 0.5s ease; /* Плавный переход */
+  z-index: 0; /* Поместить за текстом */
+  opacity: 0; /* Начальная непрозрачность */
+}
+
+.button::before {
+  transform: translate(-50%, -50%) scale(0); /* Начальное состояние */
+}
+
+.button::after {
+  background: rgba(0, 0, 0, 0.1); /* Тень */
+  transform: translate(-50%, -50%) scale(0); /* Начальное состояние */
+}
+
+.button:hover::before {
+  transform: translate(-50%, -50%) scale(1); /* Анимация при наведении */
+  opacity: 1; /* Увеличение непрозрачности при наведении */
+}
+
+.button:hover::after {
+  transform: translate(-50%, -50%) scale(1); /* Анимация тени */
+  opacity: 1; /* Увеличение непрозрачности тени */
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #5a63c6, #3c4eb2); /* Более темный градиент при наведении */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Увеличенная тень при наведении */
+  transform: translateY(-4px) rotate(1deg); /* Подъём кнопки и небольшое вращение при наведении */
+}
+
+.button:active {
+  transform: translateY(2px) rotate(0deg); /* Вернуться на место при нажатии */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень при нажатии */
+}
+
+.button:focus {
+  outline: none; /* Убрать стандартный контур */
+  box-shadow: 0 0 0 3px rgba(105, 169, 248, 0.5); /* Контур при фокусе */
+}
+
+.button span {
+  position: relative; /* Для эффекта текста */
+  z-index: 1; /* Текст поверх псевдоэлементов */
+}
+
+.button:hover span {
+  animation: pulse 0.6s ease-in-out infinite; /* Анимация пульсации текста при наведении */
+}
+
+@keyframes pulse {
+  0%, 100% {
+      transform: scale(1);
+  }
+  50% {
+      transform: scale(1.1);
+  }
+}
+
+/* Новые эффекты нажатия */
+.button:active::after {
+  content: '';
+  position: absolute;
+  width: 300%; /* Размер для эффекта волны */
+  height: 300%; /* Размер для эффекта волны */
+  border-radius: 50%; /* Круглая форма */
+  background: rgba(255, 255, 255, 0.4); /* Полупрозрачный белый цвет */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0); /* Начальное состояние */
+  animation: wave 0.6s ease-out forwards; /* Анимация волны */
+  z-index: 1; /* Над текстом */
+}
+
+@keyframes wave {
+  0% {
+      transform: translate(-50%, -50%) scale(0); /* Начальное состояние */
+      opacity: 1; /* Полная непрозрачность */
+  }
+  100% {
+      transform: translate(-50%, -50%) scale(1); /* Конечное состояние */
+      opacity: 0; /* Полная прозрачность */
+  }
+}

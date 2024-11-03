@@ -1,70 +1,225 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Application</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+
+    <!-- Подключите jQuery и JS для Bootstrap и Selectpicker -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+</head>
 
 {% block content %}
-    <body>
-        <form method="get" class="container">
+    <form method="get" class="container">
+        <div class="select-container">
+            <h2>Select status:</h2>
+            <h3> </h3>
+            <h3> </h3>
             {{ form.status.label_tag }}
+            {{ form.status }}
             <button type="submit" class="ripple">Search</button>
-            {{ form.status }} <!-- Это будет стандартный select, скрытый через CSS -->
-        
-            <div class="custom-select"></div>
-        </form>
-
+        </div>
+    </form>
+    <body>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
-        $(function() {
-            $('.choose').each(function() {
-                var $select = $(this);
-                var firstOptionText = $select.children('option:first-child').text();
-                var $customSelect = $('<div class="custom-select"></div>');
-                
-                // Создаем элемент span для отображения выбранного значения
-                $customSelect.append('<span class="spanVal">' + firstOptionText + '</span>');
-                $customSelect.append('<ul></ul>');
-                
-                // Добавляем все опции в кастомный список
-                $select.children('option').each(function() {
-                    var optionValue = $(this).val();
-                    var optionText = $(this).text();
-                    $('<li data-value="' + optionValue + '">' + optionText + '</li>').appendTo($customSelect.find('ul'));
-                });
-                
-                // Помещаем кастомный select после стандартного select
-                $select.after($customSelect);
-            });
+        +function ($) {
+            'use strict';
 
-            // Обработчик клика для spanVal
-            $('.spanVal').on('click', function() {
-                $(this).siblings('ul').slideToggle('fast'); // Показываем/скрываем список
-            });
+            // DROPDOWN CLASS DEFINITION
+            // =========================
 
-            // Обработчик клика для пунктов списка
-            $('.custom-select').on('click', 'li', function() {
-                var selectedText = $(this).text();
-                var selectedValue = $(this).data('value');
-                $(this).closest('.custom-select').find('.spanVal').html(selectedText);
-                $(this).closest('.custom-select').prev('select').val(selectedValue); // Устанавливаем значение в скрытый select
-                $(this).parent().hide(); // Скрываем список
-            });
+            var backdrop = '.dropdown-backdrop'
+            var toggle   = '[data-toggle="dropdown"]'
+            var Dropdown = function (element) {
+                $(element).on('click.bs.dropdown', this.toggle)
+            }
 
-            // Закрытие списка при клике вне его
-            $(document).click(function(e) {
-                if (!$(e.target).closest('.custom-select').length) {
-                    $(".custom-select ul").hide(); // Скрываем список, если кликнули вне него
+            Dropdown.VERSION = '3.4.1'
+
+            function getParent($this) {
+                var selector = $this.attr('data-target')
+
+                if (!selector) {
+                selector = $this.attr('href')
+                selector = selector && /#[A-Za-z]/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, '') // strip for ie7
                 }
-            });
-        });
-        </script>
 
-        <ul>
-            {% for task in tasks %}
-                <li><a href="{% url 'task-detail' task.pk %}">{{task.title}}</a>
-                <p> {{task.status}} </p>
-                <p> {{task.priority}} </p>
-                </li>
-            {% empty %}
-                <p>No tasks</p>
-            {% endfor %}
+                var $parent = selector !== '#' ? $(document).find(selector) : null
+
+                return $parent && $parent.length ? $parent : $this.parent()
+            }
+
+            function clearMenus(e) {
+                if (e && e.which === 3) return
+                $(backdrop).remove()
+                $(toggle).each(function () {
+                var $this         = $(this)
+                var $parent       = getParent($this)
+                var relatedTarget = { relatedTarget: this }
+
+                if (!$parent.hasClass('open')) return
+
+                if (e && e.type == 'click' && /input|textarea/i.test(e.target.tagName) && $.contains($parent[0], e.target)) return
+
+                $parent.trigger(e = $.Event('hide.bs.dropdown', relatedTarget))
+
+                if (e.isDefaultPrevented()) return
+
+                $this.attr('aria-expanded', 'false')
+                $parent.removeClass('open').trigger($.Event('hidden.bs.dropdown', relatedTarget))
+                })
+            }
+
+            Dropdown.prototype.toggle = function (e) {
+                var $this = $(this)
+
+                if ($this.is('.disabled, :disabled')) return
+
+                var $parent  = getParent($this)
+                var isActive = $parent.hasClass('open')
+
+                clearMenus()
+
+                if (!isActive) {
+                if ('ontouchstart' in document.documentElement && !$parent.closest('.navbar-nav').length) {
+                    // if mobile we use a backdrop because click events don't delegate
+                    $(document.createElement('div'))
+                    .addClass('dropdown-backdrop')
+                    .insertAfter($(this))
+                    .on('click', clearMenus)
+                }
+
+                var relatedTarget = { relatedTarget: this }
+                $parent.trigger(e = $.Event('show.bs.dropdown', relatedTarget))
+
+                if (e.isDefaultPrevented()) return
+
+                $this
+                    .trigger('focus')
+                    .attr('aria-expanded', 'true')
+
+                $parent
+                    .toggleClass('open')
+                    .trigger($.Event('shown.bs.dropdown', relatedTarget))
+                }
+
+                return false
+            }
+
+            Dropdown.prototype.keydown = function (e) {
+                if (!/(38|40|27|32)/.test(e.which) || /input|textarea/i.test(e.target.tagName)) return
+
+                var $this = $(this)
+
+                e.preventDefault()
+                e.stopPropagation()
+
+                if ($this.is('.disabled, :disabled')) return
+
+                var $parent  = getParent($this)
+                var isActive = $parent.hasClass('open')
+
+                if (!isActive && e.which != 27 || isActive && e.which == 27) {
+                if (e.which == 27) $parent.find(toggle).trigger('focus')
+                return $this.trigger('click')
+                }
+
+                var desc = ' li:not(.disabled):visible a'
+                var $items = $parent.find('.dropdown-menu' + desc)
+
+                if (!$items.length) return
+
+                var index = $items.index(e.target)
+
+                if (e.which == 38 && index > 0)                 index--         // up
+                if (e.which == 40 && index < $items.length - 1) index++         // down
+                if (!~index)                                    index = 0
+
+                $items.eq(index).trigger('focus')
+            }
+
+
+            // DROPDOWN PLUGIN DEFINITION
+            // ==========================
+
+            function Plugin(option) {
+                return this.each(function () {
+                var $this = $(this)
+                var data  = $this.data('bs.dropdown')
+
+                if (!data) $this.data('bs.dropdown', (data = new Dropdown(this)))
+                if (typeof option == 'string') data[option].call($this)
+                })
+            }
+
+            var old = $.fn.dropdown
+
+            $.fn.dropdown             = Plugin
+            $.fn.dropdown.Constructor = Dropdown
+
+
+            // DROPDOWN NO CONFLICT
+            // ====================
+
+            $.fn.dropdown.noConflict = function () {
+                $.fn.dropdown = old
+                return this
+            }
+
+
+            // APPLY TO STANDARD DROPDOWN ELEMENTS
+            // ===================================
+
+            $(document)
+                .on('click.bs.dropdown.data-api', clearMenus)
+                .on('click.bs.dropdown.data-api', '.dropdown form', function (e) { e.stopPropagation() })
+                .on('click.bs.dropdown.data-api', toggle, Dropdown.prototype.toggle)
+                .on('keydown.bs.dropdown.data-api', toggle, Dropdown.prototype.keydown)
+                .on('keydown.bs.dropdown.data-api', '.dropdown-menu', Dropdown.prototype.keydown)
+
+            }(jQuery);
+
+
+            $(function () {
+            $('.selectpicker').selectpicker();
+            });
+        </script>
+        <div class="vertical-line-left"></div>
+    
+        <!-- Правая полоса -->
+        <div class="vertical-line-right"></div>
+
+        <ul class="task-list">
+            <div class="center-container">
+                {% for task in tasks %}
+                    <li class="task-item">
+                        <div class="task-content">
+                            <div class="social-container-wrap">
+                                <h1 class="task-title">{{ task.id }}. Task</h1>
+                            </div>
+                            <p>Name: <a href="{% url 'task-detail' task.pk %}">{{ task.title }}</a></p>
+                            <p>Status: {{ task.status }}</p>
+                            <p>Priority: {{ task.priority }}</p>
+                            <button class="blue-button" onclick="window.location.href='{% url 'task-update' task.pk %}'">Update</button>
+                        </div>
+                    </li>
+                {% empty %}
+                    <div class="center-container">
+                            <li class="task-item">
+                                <div class="task-content">
+                                    <p>Failed: No tasks</p>
+                                </div>
+                    </div>
+                {% endfor %}
+            </div>
         </ul>
+
     </body>
 {% endblock %}
