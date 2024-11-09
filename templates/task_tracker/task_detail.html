@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Task Application</title>
+    <title>Task Details</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/detail.css' %}">
 </head>
@@ -40,9 +40,10 @@
             <div>
                 <h3>Comments</h3>
                 {% for comment in task.comments.all %}
+                <p>--------------------------------------------------------------</p>
                 <p>Author: {{ comment.author.username }}</p>
-                <p>{{ comment.content }}</p>
-                <p>{{ comment.created_at }}</p>
+                <p>Comment: {{ comment.content }}</p>
+                <p>Date of create: {{ comment.created_at }}</p>
                 {% empty %}
                 <h2>Empty</h2>
                 {% endfor %}

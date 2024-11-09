@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Task Application</title>
+    <title>Task List</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -23,7 +23,8 @@
             <h3> </h3>
             {{ form.status.label_tag }}
             {{ form.status }}
-            <button type="submit" class="ripple">Search</button>
+            <button type="submit" class="blue-button">Search</button>
+            <button type="button" class="blue-button" onclick="window.location.href='{% url 'task-create' %}'">Create New</button>
         </div>
     </form>
     <body>
@@ -204,10 +205,10 @@
                             <div class="social-container-wrap">
                                 <h1 class="task-title">{{ task.id }}. Task</h1>
                             </div>
-                            <p>Name: <a href="{% url 'task-detail' task.pk %}">{{ task.title }}</a></p>
+                            <p>Name: <a href="{% url 'task-detail' task.pk %}">{{ task.title }}</a> ← (Click to more)</p>
                             <p>Status: {{ task.status }}</p>
                             <p>Priority: {{ task.priority }}</p>
-                            <button class="blue-button" onclick="window.location.href='{% url 'task-update' task.pk %}'">Update</button>
+                            <button class="blue-button" onclick="window.location.href='{% url 'task-update' task.pk %}'">Update Task</button>
                         </div>
                     </li>
                 {% empty %}

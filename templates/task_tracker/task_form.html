@@ -1,9 +1,19 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Task</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/create.css' %}">
+</head>
 
 {% block content %}
+<div class="form-container">
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">CLICK</button>
+
+        <button type="submit">Save & Create</button>
     </form>
+</div>
 {% endblock %}
