@@ -8,7 +8,8 @@
 </head>
 
 {% block content %}
-    <<div class="container">
+{% load custom_tags %}
+    <div class="container">
         <div class="header">
           <input type="radio" name="tab" id="tab1" value="tab1">
           <input type="radio" name="tab" id="tab2" value="tab2">
@@ -44,6 +45,24 @@
                 <p>Author: {{ comment.author.username }}</p>
                 <p>Comment: {{ comment.content }}</p>
                 <p>Date of create: {{ comment.created_at }}</p>
+
+                <div>
+                  {% if comment.media %}
+                    <div>
+                      {% if comment.media.url|endswith:".jpg" or comment.media.url|endswith:".png" or comment.media.url|endswith:".jpeg" %}
+                      <img src="{{ comment.media.url }}" alt="cartinka" sizes="700">
+                      {% elif comment.media.url|endswith:".mp4"%}
+                      <video width="320" height="240" controls>
+                        <source src="{{comment.media.url}}" type="video/mp4">
+                        None
+                      </video>
+                      {% else %}
+                      <a href="{{comment.media.url}}">Load</a>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+
                 {% empty %}
                 <h2>Empty</h2>
                 {% endfor %}
