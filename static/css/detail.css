@@ -354,3 +354,85 @@ input[type="password"]:focus {
       opacity: 0; /* Полная прозрачность */
   }
 }
+
+/* Стиль для красной кнопки удаления */
+/* Стиль для красной кнопки удаления комментария */
+/* Компактная кнопка удаления */
+.delete-comment-button {
+  padding: 8px 16px;  /* Уменьшенные отступы */
+  font-size: 14px;  /* Меньший размер шрифта */
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  background: linear-gradient(145deg, #ff4e50, #d41a1d);
+  border: none;
+  border-radius: 8px;  /* Уменьшенный радиус скругления */
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(255, 78, 80, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Эффект вспышки на кнопке при наведении */
+.delete-comment-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250%;
+  height: 250%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%) rotate(45deg);
+  transition: all 0.75s ease;
+  opacity: 0;
+}
+
+/* Эффект наведения на кнопку */
+.delete-comment-button:hover {
+  box-shadow: 0 6px 15px rgba(255, 78, 80, 0.5);
+  background: linear-gradient(145deg, #d41a1d, #ff4e50);
+  transform: scale(1.05);
+}
+
+.delete-comment-button:hover::before {
+  opacity: 1;
+  width: 300%;
+  height: 300%;
+}
+
+/* Эффект нажатия на кнопку */
+.delete-comment-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 3px 8px rgba(255, 78, 80, 0.2);
+}
+
+/* Стили для кнопки загрузки файла (label) */
+.file-button {
+  display: inline-block;
+  background-color: #4CAF50; /* Зеленый фон */
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-bottom: 15px;
+}
+
+/* При наведении на кнопку загрузки */
+.file-button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+/* При нажатии */
+.file-button:active {
+  background-color: #388e3c;
+  transform: scale(0.98);
+}
+
+/* Скрыть реальную кнопку input (выбор файла) */
+.file-upload-input {
+  display: none;
+}
+

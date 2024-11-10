@@ -50,7 +50,7 @@
                   {% if comment.media %}
                     <div>
                       {% if comment.media.url|endswith:".jpg" or comment.media.url|endswith:".png" or comment.media.url|endswith:".jpeg" %}
-                      <img src="{{ comment.media.url }}" alt="cartinka" sizes="700">
+                      <img src="{{ comment.media.url }}" alt="cartinka" sizes="200">
                       {% elif comment.media.url|endswith:".mp4"%}
                       <video width="320" height="240" controls>
                         <source src="{{comment.media.url}}" type="video/mp4">
@@ -63,28 +63,37 @@
                   {% endif %}
                 </div>
 
+                <button class="delete-comment-button" onclick="window.location.href='{% url 'comment-delete' comment.pk %}'">
+                  Delete Comment
+                </button>
+              
                 {% empty %}
                 <h2>Empty</h2>
                 {% endfor %}
             </div>
           </div>
           <div class="content">
-            <div>
-                <h2>Add comment</h2>
-                <form method="post" action="{% url 'task-detail' task.id %}" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ comment_form.as_p }}
-                    <button type="submit" class="button">Save</button>
-                </form>
-            </div>
+            <h2>Add comment</h2>
+            <form method="post" action="{% url 'task-detail' task.id %}" enctype="multipart/form-data">
+                <button type="button" class="file-button" onclick="document.getElementById('id_media').click();">Upload File</button>
+                <span id="file-name">No file chosen</span>
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                
+                <button type="submit" class="button">Create Comment</button>
+            </form>
           </div>
         </div>
-        <button type="submit" class="button ripple" id="magicButton"><span>Back</span></button>
+        <button type="submit" class="button ripple" onclick="window.location.href='{% url 'task-list' %}'" id="magicButton"><span>Back</span></button>
       </div>
 
     <script>
+        document.getElementById('id_media').addEventListener('change', function() {
+          var fileName = this.files.length > 0 ? this.files[0].name : 'Файл не выбран';
+          document.getElementById('file-name').textContent = fileName;
+        });
         document.getElementById('magicButton').addEventListener('click', function () {
-            history.back(); // Возвращает на предыдущую страницу
+        window.location.href = "{% url 'task-list' %}";
         });
         document.getElementById('magicButton').addEventListener('click', function (e) {
         const ripple = document.createElement('span');

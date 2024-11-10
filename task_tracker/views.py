@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_list_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Task, Comment
 from .forms import TaskForm, TaskFilterForm, CommentForm
@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .mixins import UserIsOwnerMixin
 from task_tracker.mixins import UserIsOwnerMixin
+from django.http import HttpResponseRedirect
 
 class TaskListView(ListView):
     model = Task
@@ -56,13 +57,18 @@ class TaskUpdateView(LoginRequiredMixin, UserIsOwnerMixin, UpdateView):
     form_class = TaskForm
     success_url = reverse_lazy('task-list')
 
+class TaskDeleteView(LoginRequiredMixin, UserIsOwnerMixin, DeleteView):
+    model = Task
+    success_url = reverse_lazy("task-list")
+    template_name = "task_tracker/task_delete_confirmation.html"
+
 class CommentDeleteView(LoginRequiredMixin, DeleteView):
     model = Comment
-    template_name = "tasks/delete_comment.html"
+    template_name = "task_tracker/delete_comment.html"
 
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(author=self.request.user)
 
     def get_success_url(self):
-        return reverse_lazy('tasks:task-detail', kwargs={'pk': self.object.task.pk})
+        return reverse_lazy('task-detail', kwargs={'pk': self.object.task.pk})

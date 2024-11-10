@@ -209,6 +209,7 @@
                             <p>Status: {{ task.status }}</p>
                             <p>Priority: {{ task.priority }}</p>
                             <button class="blue-button" onclick="window.location.href='{% url 'task-update' task.pk %}'">Update Task</button>
+                            <button class="blue-button" onclick="window.location.href='{% url 'task-delete' task.pk %}'">Delete Task</button>
                         </div>
                     </li>
                 {% empty %}

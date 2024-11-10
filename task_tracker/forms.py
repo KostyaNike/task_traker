@@ -40,5 +40,11 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['content', 'media']
         widgets = {
-            'media': forms.FileInput()
+            'media': forms.FileInput(attrs={
+                'style': 'display: none;'
+            })
+        }
+
+        labels = {
+            'media': ''
         }

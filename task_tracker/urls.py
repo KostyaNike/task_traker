@@ -8,5 +8,6 @@ urlpatterns = [
     path('<int:pk>/', views.TaskDetailView.as_view(), name='task-detail'),
     path('task-create', views.TaskCreateView.as_view(), name='task-create'),
     path('task-update/<int:pk>/', views.TaskUpdateView.as_view(), name='task-update'),
-    path('comment-delete/<int:pk>/', views.CommentDeleteView.as_view(), name='comment-delete')
+    path("<int:pk>/delete/", views.TaskDeleteView.as_view(), name="task-delete"),
+    path('comment-delete/<int:pk>/', views.CommentDeleteView.as_view(), name='comment-delete'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
