@@ -34,15 +34,13 @@ body {
     align-items: center;
 }
 
-/* Вертикальная полоса-разделитель */
 .divider {
-    width: 1px;  /* Узкая линия */
-    height: 30px;  /* Длина полосы */
-    background-color: #ddd;  /* Цвет линии */
-    margin: 0 20px;  /* Отступы от кнопок */
+    width: 1px;
+    height: 30px;
+    background-color: #ddd;
+    margin: 0 20px;
 }
 
-/* Стиль для кнопки удаления */
 .delete-btn {
     padding: 10px 20px;
     font-size: 14px;
